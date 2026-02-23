@@ -9,24 +9,27 @@ jobs:
       - checkout
 
       - run:
-          name: Show files
-          command: ls
+          name: Show full directory tree
+          command: |
+            pwd
+            ls
+            find . -name "*.csproj"
 
       - run:
-          name: Move into project folder
-          command: cd firstapp
+          name: Enter project directory
+          command: cd $(dirname $(find . -name "*.csproj" | head -n 1))
 
       - run:
           name: Restore
-          command: dotnet restore firstapp.csproj
+          command: dotnet restore
 
       - run:
           name: Build
-          command: dotnet build firstapp.csproj
+          command: dotnet build
 
       - run:
           name: Run
-          command: dotnet run --project firstapp.csproj
+          command: dotnet run
 
 workflows:
   build_and_test:
