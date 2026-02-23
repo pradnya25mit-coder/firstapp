@@ -1,31 +1,34 @@
-
 version: 2.1
 
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:10.0-preview
+      - image: mcr.microsoft.com/dotnet/sdk:8.0
+
     steps:
       - checkout
 
       - run:
-          name: Show .NET Version
-          command: dotnet --version
+          name: Show files
+          command: ls
+
+      - run:
+          name: Move into project folder
+          command: cd firstapp
 
       - run:
           name: Restore
-          command: dotnet restore
+          command: dotnet restore firstapp.csproj
 
       - run:
           name: Build
-          command: dotnet build --no-restore
+          command: dotnet build firstapp.csproj
 
       - run:
-          name: Test
-          command: dotnet test --no-build
+          name: Run
+          command: dotnet run --project firstapp.csproj
 
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - build
