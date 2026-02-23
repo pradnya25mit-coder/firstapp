@@ -1,28 +1,34 @@
-
 version: 2.1
 
 jobs:
   build:
     docker:
+      # Match your local SDK (10.0.103)
       - image: mcr.microsoft.com/dotnet/sdk:10.0
 
     steps:
       - checkout
 
       - run:
-          name: Find project file
+          name: Show workspace
+          command: |
+            pwd
+            ls
+
+      - run:
+          name: Locate project file
           command: find . -name "*.csproj"
 
       - run:
-          name: Restore
+          name: Restore project
           command: dotnet restore
 
       - run:
-          name: Build
+          name: Build project
           command: dotnet build
 
       - run:
-          name: Run
+          name: Run project
           command: dotnet run
 
 workflows:
