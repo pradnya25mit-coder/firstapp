@@ -1,23 +1,17 @@
+
 version: 2.1
 
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:8.0
+      - image: mcr.microsoft.com/dotnet/sdk:10.0
 
     steps:
       - checkout
 
       - run:
-          name: Show full directory tree
-          command: |
-            pwd
-            ls
-            find . -name "*.csproj"
-
-      - run:
-          name: Enter project directory
-          command: cd $(dirname $(find . -name "*.csproj" | head -n 1))
+          name: Find project file
+          command: find . -name "*.csproj"
 
       - run:
           name: Restore
